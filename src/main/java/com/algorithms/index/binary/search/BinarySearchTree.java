@@ -1,6 +1,7 @@
 package com.algorithms.index.binary.search;
 
 
+
 /**
  * @author xuande (xuande@dajiaok.com)
  * @date 2022/4/11  13:35:49
@@ -28,7 +29,6 @@ public class BinarySearchTree {
                     parentNode = parentNode.left;
                     continue;
                 }else {
-                    treeNode.left = parentNode;
                     parentNode.left = treeNode;
                     break;
                 }
@@ -37,7 +37,6 @@ public class BinarySearchTree {
                   parentNode = parentNode.right;
                   continue;
               } else {
-                  treeNode.left = parentNode;
                   parentNode.right = treeNode;
                   break;
               }
@@ -138,22 +137,37 @@ public class BinarySearchTree {
     }
 
     /**
-     * 查询下一个节点
+     * 查询下一个节点(左树最大节点)
      * @param deleteNode
      * @return
      */
     public TreeNode findNext(TreeNode deleteNode){
 
-        TreeNode next = deleteNode;
+        TreeNode successorParent = deleteNode;
 
-        TreeNode current = deleteNode;
+        TreeNode successor = deleteNode;
+
+        TreeNode current = deleteNode.left;
 
         //寻找左树的最大节点
+        while (current != null){
+            successorParent = successor;
+            successor = current;
+            current = current.right;
+        }
 
 
 
+        if (successor != deleteNode.left){
+            // 将左树最大节点的左节点连接到其父节点的右节点（保持二叉树平衡）
+            successorParent.right = successor.left;
+            // 与被删除节点交换位置
+            successor.left = deleteNode.left;
 
-        return next;
+            successor.right = deleteNode.right;
+        }
+
+        return successor;
 
     }
 
@@ -189,18 +203,24 @@ public class BinarySearchTree {
     public static void main(String[] args) {
         BinarySearchTree binarySearchTree = new BinarySearchTree();
 
-        TreeNode treeNode = new TreeNode(2);
-        TreeNode treeNode2 = new TreeNode(1);
-        TreeNode treeNode3 = new TreeNode(3);
-        TreeNode treeNode4 = new TreeNode(4);
+        TreeNode treeNode = new TreeNode(10);
+        TreeNode treeNode2 = new TreeNode(5);
+        TreeNode treeNode3 = new TreeNode(4);
+        TreeNode treeNode4 = new TreeNode(8);
+        TreeNode treeNode5 = new TreeNode(15);
+
+
 
 
         binarySearchTree.addNode(treeNode);
         binarySearchTree.addNode(treeNode2);
         binarySearchTree.addNode(treeNode3);
         binarySearchTree.addNode(treeNode4);
+        binarySearchTree.addNode(treeNode5);
 
+        binarySearchTree.delete(new TreeNode(10));
 
+        int i = 0;
     }
 
 
