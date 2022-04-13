@@ -138,6 +138,7 @@ public class BinarySearchTree {
 
     /**
      * 查询下一个节点(左树最大节点)
+     * 或（右树最小节点）
      * @param deleteNode
      * @return
      */
@@ -218,7 +219,8 @@ public class BinarySearchTree {
         binarySearchTree.addNode(treeNode4);
         binarySearchTree.addNode(treeNode5);
 
-        binarySearchTree.delete(new TreeNode(10));
+        int maxDeep = binarySearchTree.maxDeep(treeNode);
+        System.out.println(maxDeep);
 
         int i = 0;
     }
@@ -227,7 +229,48 @@ public class BinarySearchTree {
 
 
 
+    private void showTree(){
+        TreeNode current = rootNode;
 
+        int maxDeep = maxDeep(current);
+
+        // 最大叶子节点数量
+//        int maxLeafNode = 2 << maxDeep;
+
+
+
+
+
+
+    }
+
+
+    /**
+     * 二叉树最大深度
+     */
+    private int maxDeep(TreeNode treeNode){
+        if (treeNode == null){
+            return 0;
+        }
+
+        if (treeNode.left == null && treeNode.right == null){
+            return 1;
+        }
+
+        int maxLeft = 0;
+
+        int maxRight = 0;
+
+        if(treeNode != null){
+
+            maxLeft = maxDeep(treeNode.left);
+
+            maxRight = maxDeep(treeNode.right);
+        }
+
+        return Math.max(maxLeft, maxRight) + 1;
+
+    }
 
 
 
